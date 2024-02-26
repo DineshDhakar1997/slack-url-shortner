@@ -1,1 +1,1 @@
-web: gunicorn slackurlshortner:app
+web: gunicorn urlShort:shortner
