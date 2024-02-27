@@ -12,7 +12,7 @@ class ShortenUrl(APIView):
         try:
             short_url = ShortUrlModel.objects.get(original_url=original_url)
             short_code = short_url.short_code
-            return Response({'short_url': "http://127.0.0.1:8000/redir/"+short_code})
+            return Response({'short_url': "https://slackurlshortner-fd74f723a2da.herokuapp.com/redir/"+short_code})
         except ShortUrlModel.DoesNotExist:
             short_code = generate_short_code(original_url)
             short_url = ShortUrlModel.objects.create(original_url=original_url,short_code=short_code)
