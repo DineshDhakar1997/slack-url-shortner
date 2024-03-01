@@ -6,12 +6,15 @@ from rest_framework.response import Response
 from django.shortcuts import redirect
 import logging
 import requests
+from dotenv import load_dotenv
+import os
 
 
 logger = logging.getLogger(__name__)
+load_dotenv()
+SLACK_TOKEN = os.getenv('SLACK_TOKEN')
 client = slack_sdk.WebClient(
-    token="xoxb-6721483596338-6731107941204-bq0lJm1GJiJTtxtQvxk2b3i6"
-)
+    token=SLACK_TOKEN)
 BOT_ID = client.api_call("auth.test")["user_id"]
 
 
