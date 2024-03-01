@@ -1,15 +1,12 @@
 import slack_sdk
-import certifi
 import json
 from .models import ShortUrlModel, generate_short_code
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import redirect
-import os
 import logging
 import requests
-from pathlib import Path
-from dotenv import load_dotenv
+
 
 logger = logging.getLogger(__name__)
 client = slack_sdk.WebClient(
