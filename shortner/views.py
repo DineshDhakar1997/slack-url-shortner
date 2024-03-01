@@ -63,9 +63,9 @@ class SlackEventHandler(APIView):
 
         if data.get("event").get("type") == "message":
             message = data.get("event").get("text")
-            if message[0] is not None:
+            if message[0] is not None and message[0] == "<":
                 message = message[1:]
-            if message[-1] is not None:
+            if message[-1] is not None and message[-1] == ">":
                 message = message[:-1]
             original_url = message
             user = data.get("event").get("user")
@@ -81,13 +81,3 @@ class SlackEventHandler(APIView):
             if BOT_ID != user:
                 client.chat_postMessage(channel="#shortner", text=short_url)
         return Response({"shortened_url": short_url}, status=200)
-
-
-def call_shorten_url(url):
-    response = requests.post(
-        "https://slackurlshortner-fd74f723a2da.herokuapp.com/shorten/",
-        json={"original_url": url},
-        verify=False,
-    )
-    data = response.json()
-    return data.get("short_url")
