@@ -6,13 +6,13 @@ from rest_framework.response import Response
 from django.shortcuts import redirect
 import logging
 import requests
-from dotenv import load_dotenv
 import os
-
-
-logger = logging.getLogger(__name__)
+from dotenv import load_dotenv
 load_dotenv()
 SLACK_TOKEN = os.getenv('SLACK_TOKEN')
+
+logger = logging.getLogger(__name__)
+
 client = slack_sdk.WebClient(
     token=SLACK_TOKEN)
 BOT_ID = client.api_call("auth.test")["user_id"]
@@ -77,7 +77,6 @@ class SlackEventHandler(APIView):
                 short_code = generate_short_code(original_url)
                 short_url = ShortUrlModel.objects.create(
                 original_url=original_url, short_code=short_code)
-            # shortened_url = call_shorten_url(message)
 
             if BOT_ID != user:
                 client.chat_postMessage(channel="#shortner", text=short_url)
